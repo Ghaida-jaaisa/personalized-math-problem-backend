@@ -26,7 +26,7 @@ def rewrite_math_problem(problem: str, theme: str) -> str:
     prompt_text = f"{system_message}\n\n{user_prompt}"
 
     response = client.generate_text(
-        model="models/chat-bison-001",  # استخدم اسم النموذج الصحيح من Google
+        model="gpt-4o-mini",  # استخدم اسم النموذج الصحيح من Google
         prompt=gl.TextPrompt(text=prompt_text),
         temperature=0.7,
         max_tokens=256,

@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gpt-4o-mini")
 
 class ProblemRequest(BaseModel):
     problem: str
