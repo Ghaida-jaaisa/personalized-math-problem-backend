@@ -1,10 +1,11 @@
-from openai import OpenAI
 import os
 from dotenv import load_dotenv
+from google.ai import generativelanguage as gl
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# إنشاء العميل
+client = gl.TextServiceClient()
 
 def rewrite_math_problem(problem: str, theme: str) -> str:
     system_message = (
@@ -22,14 +23,13 @@ def rewrite_math_problem(problem: str, theme: str) -> str:
         f"Original: {problem}\nRewritten:"
     )
 
-    response = client.chat.completions.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": system_message},
-            {"role": "user", "content": user_prompt}
-        ],
-        temperature=0.7
+    prompt_text = f"{system_message}\n\n{user_prompt}"
+
+    response = client.generate_text(
+        model="models/chat-bison-001",  # استخدم اسم النموذج الصحيح من Google
+        prompt=gl.TextPrompt(text=prompt_text),
+        temperature=0.7,
+        max_tokens=256,
     )
 
-    return response.choices[0].message.content.strip()
-
+    return response.result.strip()
